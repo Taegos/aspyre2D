@@ -1,0 +1,7 @@
+sprite
+animation
+collision
+	Kuber (roterande)
+ui
+transform
+	förälder

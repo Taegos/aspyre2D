@@ -9,23 +9,28 @@ SpriteSystem::SpriteSystem(TextureRenderer& _textureRenderer, TransformSystem& _
 void SpriteSystem::submit()
 {
 	for (Component component : components) {		
-		Sprite Sprite = component.data;
-		Transform *transform = transformSystem.get(component.id);
+		Sprite sprite = component.data;
 
-		int w, h;
-		SDL_QueryTexture(Sprite.texture, NULL, NULL, &w, &h);
+		SDL_Rect src = { 
+			sprite.position.x,
+			sprite.position.y,
+			sprite.size,
+			sprite.size,
+		};
+
+		Transform *transform = transformSystem.get(component.id);
 
 		SDL_Rect dst = { 
 			transform->position.x,
 			transform->position.y,
-			w * transform->scale,
-			h * transform->scale,
+			sprite.size * transform->scale,
+			sprite.size * transform->scale,
 		};
 
 		textureRenderer.submit({
-			Sprite.texture,
-			Sprite.layer,
-			NULL,
+			sprite.spriteSheet,
+			sprite.layer,
+			src,
 			dst
 		});
 	}

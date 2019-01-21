@@ -6,7 +6,7 @@
 struct RenderJob {
 	SDL_Texture* texture;
 	int layer;
-	SDL_Rect* src;
+	SDL_Rect src;
 	SDL_Rect dst;
 };
 

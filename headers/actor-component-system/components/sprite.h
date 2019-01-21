@@ -1,6 +1,9 @@
 #include "SDL.h"
+#include "vec2.h"
 
 struct Sprite {
+    SDL_Texture* spriteSheet;
+    int size;
     int layer;
-    SDL_Texture* texture;
+    math::vector::Vec2<int> position;
 };

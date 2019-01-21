@@ -8,7 +8,7 @@ class AnimationSystem : public ComponentSystem<Animation>
 {
 public:
 	AnimationSystem(TextureRenderer&, TransformSystem&);
-	void submit();
+	void submit(float dt);
 private:
 	TextureRenderer& textureRenderer;
 	TransformSystem& transformSystem;

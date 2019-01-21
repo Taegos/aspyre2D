@@ -14,3 +14,7 @@ add_test(ComponentSystemTest ComponentSystemTest)
 add_executable(ActorSystemTest actor_system_test.cpp ${ACTOR_COMPONENT_SYSTEM_DIR_CXX}/actor_system.cpp ${ACTOR_COMPONENT_SYSTEM_DIR_CXX}/actor.cpp)
 target_include_directories(ActorSystemTest PUBLIC ${ACTOR_COMPONENT_SYSTEM_DIR_H})
 add_test(ActorSystemTest ActorSystemTest)
+
+add_executable(CollisionSystemTest collision_system_test.cpp ${COMPONENT_SYSTEMS_DIR_CXX}/collision_system.cpp)
+target_include_directories(CollisionSystemTest PUBLIC ${COMPONENT_SYSTEMS_DIR_H})
+add_test(CollisionSystemTest CollisionSystemTest)

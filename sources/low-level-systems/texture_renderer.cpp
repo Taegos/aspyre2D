@@ -24,7 +24,7 @@ void TextureRenderer::drawAll()
 	});
 	while (jobs.size() > 0) {
 		RenderJob next = jobs.back();
-		SDL_RenderCopy(renderer, next.texture, next.src, &next.dst);
+		SDL_RenderCopy(renderer, next.texture, &next.src, &next.dst);
 		jobs.pop_back();
 	}
 
