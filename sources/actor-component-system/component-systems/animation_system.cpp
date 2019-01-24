@@ -1,6 +1,9 @@
 #include "animation_system.h"
 #include "SDL.h"
 #include <iostream>
+#include "vec2.h"
+
+using namespace math::vector;
 
 AnimationSystem::AnimationSystem(TextureRenderer& _textureRenderer, TransformSystem& _transformSystem) : 
 	textureRenderer {_textureRenderer}, 
@@ -15,14 +18,8 @@ void AnimationSystem::submit(float dt)
 			anim.currentFrame = (anim.currentFrame + 1) % anim.frames.size();
 			anim.timeLeft = anim.frameTime;
 		}
-	 			
-		SDL_Rect src = { 
-			anim.size * anim.frames[anim.currentFrame].x,
-			anim.size * anim.frames[anim.currentFrame].y,
-			anim.size,
-			anim.size,
-		};
-	
+
+
 		Transform *transform = transformSystem.get(component.id);
 		SDL_Rect dst = { 
 			transform->position.x,
@@ -31,10 +28,11 @@ void AnimationSystem::submit(float dt)
 			anim.size * transform->scale,
 		};
 	
+		Vec2<int> pos = anim.frames[anim.currentFrame];
 		textureRenderer.submit({
-			anim.spriteSheet,
+			anim.spriteSheet.getTexture(),
 			anim.layer,
-			src,
+			anim.spriteSheet.get(pos.x, pos.y),
 			dst
 		});
 	}

@@ -46,15 +46,14 @@ set(LIBS ${SDL2_LIB_DIR} ${SDL2_IMAGE_LIB_DIR})
 
 #Adding the tests
 add_subdirectory(tests)
-add_subdirectory(game)
 
 #Putting everything together
-link_directories(${LIBS})
 add_executable(Aspyre2D)
+target_link_directories(Aspyre2D PUBLIC ${LIBS})
 target_link_libraries(Aspyre2D SDL2 SDL2main SDL2_image)
 target_include_directories(Aspyre2D PUBLIC ${HEADERS} ${EXTERNAL_INCLUDES})
 target_sources(Aspyre2D PUBLIC
-    game/main.cpp
+    ${CMAKE_SOURCE_DIR}/main.cpp
     ${SOURCES_DIR}/engine.cpp
     ${ACTOR_COMPONENT_SYSTEM_DIR_CXX}/actor_system.cpp
     ${ACTOR_COMPONENT_SYSTEM_DIR_CXX}/actor.cpp
@@ -68,6 +67,6 @@ target_sources(Aspyre2D PUBLIC
     ${LOW_LEVEL_SYSTEMS_DIR_CXX}/texture_renderer.cpp
     ${UI_DIR_CXX}/ui.cpp
     ${UTILITIES_DIR_CXX}/debugger.cpp
-        
+    ${UTILITIES_DIR_CXX}/sprite_sheet.cpp
     ${MATH_DIR_CXX}/vec2.cpp
 )

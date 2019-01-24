@@ -11,6 +11,7 @@
 #include "input_emitter.h"
 #include "input_poller.h"
 #include "sprite_sheet.h"
+
 class Engine 
 {
 public:
@@ -28,9 +29,16 @@ public:
 	PhysicsSystem & getPhysicsSystem();
 	
 	InputEmitter & getInputEmitter();
-	SDL_Texture* loadTexture(std::string path);
+	SpriteSheet loadSpriteSheet(std::string, int);
 	
 private:
+	Engine(SDL_Renderer*, SDL_Window*, int);
+	const float targetFrameTime;
+	float dt = 0;
+	void draw();
+	void update();
+	SDL_Texture* loadTexture(std::string);
+
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 
@@ -45,10 +53,5 @@ private:
 	InputEmitter inputEmitter;
 	TextureRenderer textureRenderer;
 
-	const float targetFrameTime;
-	float dt = 0;
-	void draw();
-	void update();
-	Engine(SDL_Renderer*, SDL_Window*, int);
 
 };

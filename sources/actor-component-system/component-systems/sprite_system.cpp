@@ -1,5 +1,7 @@
 #include "sprite_system.h"
 #include "SDL.h"
+#include "vec2.h"
+using namespace math::vector;
 
 SpriteSystem::SpriteSystem(TextureRenderer& _textureRenderer, TransformSystem& _transformSystem) : 
 	textureRenderer {_textureRenderer}, 
@@ -11,13 +13,6 @@ void SpriteSystem::submit()
 	for (Component component : components) {		
 		Sprite sprite = component.data;
 
-		SDL_Rect src = { 
-			sprite.position.x,
-			sprite.position.y,
-			sprite.size,
-			sprite.size,
-		};
-
 		Transform *transform = transformSystem.get(component.id);
 
 		SDL_Rect dst = { 
@@ -26,11 +21,11 @@ void SpriteSystem::submit()
 			sprite.size * transform->scale,
 			sprite.size * transform->scale,
 		};
-
+		
 		textureRenderer.submit({
-			sprite.spriteSheet,
+			sprite.spriteSheet.getTexture(),
 			sprite.layer,
-			src,
+			sprite.spriteSheet.get(sprite.position.x, sprite.position.y),
 			dst
 		});
 	}

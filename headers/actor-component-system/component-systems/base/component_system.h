@@ -21,7 +21,7 @@ public:
         }
         components.erase(it);
         return true;
-    }
+    }   
 
     T* get(int id) {
         auto it = find_it(id);

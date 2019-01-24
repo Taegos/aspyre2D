@@ -1,9 +1,15 @@
+#pragma once
 #include <string>
+#include "SDL.h"
 
-class SpriteShaseet {
+class SpriteSheet {
 public:
-    //SpriteSheet(std::string, int);
-    // SDL_Rect get(int x, int y);
+    SpriteSheet(SDL_Texture*, int);
+    ~SpriteSheet();
+    SDL_Rect get(int, int);
+    SDL_Texture* getTexture() const;
 private:
-    //const int spriteSize;
-}
+    const int spriteSize;
+    SDL_Texture* texture;
+    bool isPowerOf2(int);
+};
