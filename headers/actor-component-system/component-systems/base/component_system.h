@@ -50,6 +50,110 @@ private:
     }
 };
 
+// template <typename T> 
+// class ComponentSystem {
+// public:
+//     void add(int id, T data) {
+//         Component component { id, data };   
+//         Component* ptr = &component;
+//         cout << ptr-> id << " " << ptr->data << endl;
+//         components.push_back(ptr);
+//     }
+    
+//     bool remove(int id) {
+//         int index = -1;
+//         for (int i = 0; i < components.size(); i++) {
+//             if (components[i]->id == id) {
+//                 index = i;
+//                 break;
+//             }
+//         }
+//         if (index == -1) {
+//             return false;
+//         }
+//         Component* component = components[index];
+//         components.erase(components.begin() + index);
+//         delete(component);
+//     }   
+
+//     T* get(int id) {
+//         int index = -1;
+//         for (int i = 0; i < components.size(); i++) {
+//             cout << components[i]->id << " " << components[i]->data << endl;
+//             if (components[i]->id == id) {
+//                 index = i;
+//                 break;
+//             }
+//         }
+//         if (index == -1) {
+//             return nullptr;
+//         }
+//         Component* component = components[index];
+//         T data = component->data;
+//         return &data;
+//     }
+// protected:
+//     struct Component {
+//         int id;
+//         T data;
+//     };
+//     std::vector<Component*> components;
+// };
+
+
+
+
+// template <typename T> 
+// class ComponentSystem 
+// {
+// public:
+//     void add(int id, T data) {
+//         Component component { id, data };
+//         auto it = find_it(id);
+//         components.insert(it, &component);
+//     }
+    
+//     bool remove(int id) {
+//         auto it = find_it(id);
+//         if (it == components.end()) {
+//             return false;
+//         }
+//         components.erase(it);
+//         delete(*it);
+//         return true;
+//     }   
+
+//     T* get(int id) {
+//         std::cout << "lol "<< std::endl;
+//         auto it = find_it(id);
+//         if (it == components.end()) {
+//             return nullptr;
+//         }
+//         std::cout << "lol1 "<< std::endl;
+//         Component* component = *it;
+//         T data = component->data;
+//         return &data;        
+//     }
+// protected:
+//     struct Component {
+//         int id;
+//         T data;
+//     };
+//     std::vector<Component*> components;
+
+// private: 
+//     auto find_it(int id) {
+//         return std::find_if (
+//             components.begin(), 
+//             components.end(),            
+//             [&](Component* component) -> bool {
+//                 return component->id == id;
+//             }
+//         );
+//     }
+// };
+
+
 // #pragma once
 // #include <unordered_map>
 // #include <vector>

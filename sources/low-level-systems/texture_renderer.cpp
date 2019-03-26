@@ -24,7 +24,8 @@ void TextureRenderer::drawAll()
 	});
 	while (jobs.size() > 0) {
 		RenderJob next = jobs.back();
-		SDL_RenderCopy(renderer, next.texture, &next.src, &next.dst);
+		SDL_Point p = {next.dst.w / 2, next.dst.h / 2 };
+		SDL_RenderCopyEx(renderer, next.texture, &next.src, &next.dst, next.rotation, &p, next.flip);
 		jobs.pop_back();
 	}
 

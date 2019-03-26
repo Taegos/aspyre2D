@@ -2,6 +2,6 @@
 
 struct Transform {
     float scale;
-    float rotation;
+    double rotation;
     math::vector::Vec2<float> position; 
 };

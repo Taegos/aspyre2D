@@ -8,6 +8,10 @@ SpriteSystem::SpriteSystem(TextureRenderer& _textureRenderer, TransformSystem& _
 	transformSystem {_transformSystem} {
 }
 
+// bool SpriteSystem::remove(int id) {
+// 	return false;
+// }
+
 void SpriteSystem::submit()
 {
 	for (Component component : components) {		
@@ -23,10 +27,12 @@ void SpriteSystem::submit()
 		};
 		
 		textureRenderer.submit({
-			sprite.spriteSheet.getTexture(),
+			sprite.spriteSheet->getTexture(),
 			sprite.layer,
-			sprite.spriteSheet.get(sprite.position.x, sprite.position.y),
-			dst
+			sprite.spriteSheet->get(sprite.position.x, sprite.position.y),
+			dst,
+			transform->rotation,
+			sprite.flip
 		});
 	}
 }

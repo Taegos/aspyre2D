@@ -8,6 +8,8 @@ struct RenderJob {
 	int layer;
 	SDL_Rect src;
 	SDL_Rect dst;
+	double rotation;
+	SDL_RendererFlip flip;
 };
 
 class TextureRenderer

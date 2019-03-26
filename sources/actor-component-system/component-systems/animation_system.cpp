@@ -12,11 +12,11 @@ AnimationSystem::AnimationSystem(TextureRenderer& _textureRenderer, TransformSys
 void AnimationSystem::submit(float dt)
 {
 	for (Component& component : components) {
-		Animation& anim = component.data;
-		anim.timeLeft -= dt;
-		if (anim.timeLeft <= 0) {
-			anim.currentFrame = (anim.currentFrame + 1) % anim.frames.size();
-			anim.timeLeft = anim.frameTime;
+		Animation& animation = component.data;
+		animation.timeLeft -= dt;
+		if (animation.timeLeft <= 0) {
+			animation.currentFrame = (animation.currentFrame + 1) % animation.frames.size();
+			animation.timeLeft = animation.frameTime;
 		}
 
 
@@ -24,16 +24,18 @@ void AnimationSystem::submit(float dt)
 		SDL_Rect dst = { 
 			transform->position.x,
 			transform->position.y,
-			anim.size * transform->scale,
-			anim.size * transform->scale,
+			animation.size * transform->scale,
+			animation.size * transform->scale,
 		};
 	
-		Vec2<int> pos = anim.frames[anim.currentFrame];
+		Vec2<int> pos = animation.frames[animation.currentFrame];
 		textureRenderer.submit({
-			anim.spriteSheet.getTexture(),
-			anim.layer,
-			anim.spriteSheet.get(pos.x, pos.y),
-			dst
+			animation.spriteSheet->getTexture(),
+			animation.layer,
+			animation.spriteSheet->get(pos.x, pos.y),
+			dst,
+			transform->rotation,
+			animation.flip
 		});
 	}
 }

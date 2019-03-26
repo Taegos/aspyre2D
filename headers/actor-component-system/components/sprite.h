@@ -3,8 +3,9 @@
 #include "sprite_sheet.h"
 
 struct Sprite {
-    SpriteSheet& spriteSheet;
+    SpriteSheet* spriteSheet;
     int size;
     int layer;
     math::vector::Vec2<int> position;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
 };

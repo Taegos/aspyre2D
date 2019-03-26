@@ -8,6 +8,7 @@ class SpriteSystem : public ComponentSystem<Sprite>
 {
 public:
 	SpriteSystem(TextureRenderer&, TransformSystem&);
+	//bool remove(int id);
 	void submit();
 private:
 	TextureRenderer& textureRenderer;
