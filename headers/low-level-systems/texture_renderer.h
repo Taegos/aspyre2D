@@ -2,14 +2,24 @@
 
 #include "SDL.h"
 #include <vector>
+#include "sprite_sheet.h"
+#include "vec2.h"
+
 
 struct RenderJob {
-	SDL_Texture* texture;
 	int layer;
-	SDL_Rect src;
-	SDL_Rect dst;
+	SpriteSheet* sheet;
+	math::vector::Vec2<int> sheetPos;
+	math::vector::Vec2<float> destPos;
+	float scale;
 	double rotation;
-	SDL_RendererFlip flip;
+
+	// SDL_Texture* texture;
+	// int layer;
+	// SDL_Rect src;
+	// SDL_Rect dst;
+	// double rotation;
+	// SDL_RendererFlip flip;
 };
 
 class TextureRenderer

@@ -16,23 +16,26 @@ void SpriteSystem::submit()
 {
 	for (Component component : components) {		
 		Sprite sprite = component.data;
-
 		Transform *transform = transformSystem.get(component.id);
-
-		SDL_Rect dst = { 
-			transform->position.x,
-			transform->position.y,
-			sprite.size * transform->scale,
-			sprite.size * transform->scale,
-		};
 		
+		// int spriteSize = sprite.spriteSheet->getSpriteSize();
+		// SDL_Rect dst = { 
+		// 	transform->position.x,
+		// 	transform->position.y,
+		// 	spriteSize * transform->scale,
+		// 	sprite.size * transform->scale,
+		// };		
 		textureRenderer.submit({
-			sprite.spriteSheet->getTexture(),
 			sprite.layer,
-			sprite.spriteSheet->get(sprite.position.x, sprite.position.y),
-			dst,
-			transform->rotation,
-			sprite.flip
+			sprite.sheet,
+			sprite.position,
+			transform->position,
+			transform->scale,
+			transform->rotation
+			// sprite.spriteSheet->get(sprite.position.x, sprite.position.y),
+			// dst,
+			// transform->rotation,
+			// sprite.flip
 		});
 	}
 }

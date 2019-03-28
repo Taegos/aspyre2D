@@ -11,6 +11,7 @@ set(LOW_LEVEL_SYSTEMS_DIR_H ${HEADERS_DIR}/low-level-systems)
 set(UI_DIR_H ${HEADERS_DIR}/ui)
 set(UTILITIES_DIR_H ${HEADERS_DIR}/utilities)
 set(MATH_DIR_H ${UTILITIES_DIR_H}/math)
+set(GEOMETRY_DIR_H ${MATH_DIR_H}/geometry)
 
 set(HEADERS 
     ${HEADERS_DIR} 
@@ -21,7 +22,9 @@ set(HEADERS
     ${LOW_LEVEL_SYSTEMS_DIR_H}
     ${UI_DIR_H}
     ${UTILITIES_DIR_H}
-    ${MATH_DIR_H})
+    ${MATH_DIR_H}
+    ${GEOMETRY_DIR_H}
+)
 
 #SOURCES PATHS 
 set(SOURCES_DIR ${CMAKE_SOURCE_DIR}/sources)
@@ -31,6 +34,7 @@ set(LOW_LEVEL_SYSTEMS_DIR_CXX ${SOURCES_DIR}/low-level-systems)
 set(UI_DIR_CXX ${SOURCES_DIR}/ui)
 set(UTILITIES_DIR_CXX ${SOURCES_DIR}/utilities)
 set(MATH_DIR_CXX ${UTILITIES_DIR_CXX}/math)
+set(GEOMETRY_DIR_CXX ${MATH_DIR_CXX}/geometry)
 
 #External includes
 set(EXTERNAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/external/include)
@@ -55,6 +59,7 @@ target_include_directories(Aspyre2D PUBLIC ${HEADERS} ${EXTERNAL_INCLUDES})
 target_sources(Aspyre2D PUBLIC
     ${CMAKE_SOURCE_DIR}/main.cpp
     ${SOURCES_DIR}/engine.cpp
+   # ${SOURCE_DIR}/scene.cpp
     ${ACTOR_COMPONENT_SYSTEM_DIR_CXX}/actor_system.cpp
     ${ACTOR_COMPONENT_SYSTEM_DIR_CXX}/actor.cpp
     ${COMPONENT_SYSTEMS_DIR_CXX}/animation_system.cpp
@@ -69,4 +74,6 @@ target_sources(Aspyre2D PUBLIC
     ${UTILITIES_DIR_CXX}/debugger.cpp
     ${UTILITIES_DIR_CXX}/sprite_sheet.cpp
     ${MATH_DIR_CXX}/vec2.cpp
+    ${GEOMETRY_DIR_CXX}/line_segment.cpp
+    ${GEOMETRY_DIR_CXX}/polygon.cpp
 )

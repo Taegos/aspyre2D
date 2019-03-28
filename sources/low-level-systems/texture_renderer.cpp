@@ -1,31 +1,36 @@
-#include "texture_renderer.h"
+#include "renderer.h"
 #include "SDL_image.h"
 #include <algorithm>
 
 using namespace std;
 
-TextureRenderer::TextureRenderer(SDL_Renderer* renderer)
+Renderer::Renderer(SDL_Renderer* renderer)
 {
 	this->renderer = renderer;
 }
 
-TextureRenderer::~TextureRenderer()
-{
-	
-}
-
-void TextureRenderer::drawAll()
+void Renderer::drawFrame(vector<RenderJob> frame)
 {	
 	SDL_SetRenderDrawColor(renderer, 18, 21, 30, 0);
 	SDL_RenderClear(renderer);
-	sort(jobs.begin(), jobs.end(), [](const RenderJob& job0, const RenderJob& job1) -> bool
+	sort(frame.begin(), frame.end(), [](const RenderJob& job0, const RenderJob& job1) -> bool
 	{
 		return job1.layer < job0.layer;
 	});
-	while (jobs.size() > 0) {
-		RenderJob next = jobs.back();
-		SDL_Point p = {next.dst.w / 2, next.dst.h / 2 };
-		SDL_RenderCopyEx(renderer, next.texture, &next.src, &next.dst, next.rotation, &p, next.flip);
+	while (frame.size() > 0) {
+		RenderJob job = jobs.back();
+		SpriteSheet& sheet = spriteSheets[job.]
+		SpriteSheet* sheet = next.sheet;
+		SDL_Rect src = sheet->get(next.sheetPos.x, next.sheetPos.y);	
+		float dstWidth = src.w * next.scale;
+		float dstHeight = src.h * next.scale;
+		SDL_Rect dst = { 
+			next.destPos.x - dstWidth / 2 ,
+			next.destPos.y - dstHeight / 2,
+			dstWidth,
+			dstHeight,
+		};	
+		SDL_RenderCopyEx(renderer, sheet->getTexture(), &src, &dst, next.rotation, NULL, SDL_FLIP_NONE);
 		jobs.pop_back();
 	}
 
@@ -36,8 +41,4 @@ void TextureRenderer::drawAll()
 	//	const double           angle,
 	//	const SDL_Point*       center,
 	//	const SDL_RendererFlip flip)
-}
-
-void TextureRenderer::submit(const RenderJob&& job) {
-	jobs.push_back(job);
 }

@@ -1,15 +1,16 @@
 #pragma once
 #include <string>
-#include "SDL.h"
+#include <vec2.h>
+#include <geometry.h>
 
 class SpriteSheet {
 public:
-    SpriteSheet(SDL_Texture*, int);
-    ~SpriteSheet();
-    SDL_Rect get(int, int);
-    SDL_Texture* getTexture() const;
+    SpriteSheet(int, math::vector::Vec2<int>, int);
+    math::geometry::Rect<int> getSpriteRect(math::vector::Vec2<int>);
+    int getTextureHandle() const;
 private:
     const int spriteSize;
-    SDL_Texture* texture;
+    const math::vector::Vec2<int> sheetSize;
+    const int textureHandle;
     bool isPowerOf2(int);
 };
