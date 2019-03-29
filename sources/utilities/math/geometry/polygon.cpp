@@ -9,12 +9,12 @@ Polygon::Polygon(const std::vector<Vec2>& _points, bool closed) : points { _poin
 }
 
 
-bool Polygon::getIntersection(const Polygon& other, IntersectionData& intersectionData) const {
+bool Polygon::isIntersecting(const Polygon& other, IntersectionData& intersectionData) const {
     bool intersection = false;
     for (int i = 0; i < points.size() - 1; i++) {
         for (int j = 0; j < other.points.size() - 1; j++) {    
             Vec2 intersectionPoint {};    
-            intersection = getIntersection(
+            intersection = isIntersecting(
                 points[i],
                 points[i+1],
                 other.points[j],
@@ -29,27 +29,52 @@ bool Polygon::getIntersection(const Polygon& other, IntersectionData& intersecti
     return intersection;
 }
 
-//y = kx + m
-//y = slopeA * x + interceptA
-//y = slopeB * x + interceptB
-//slopeA * x + interceptA = slopeB * x + interceptB
-//slopeA * x - slopeB * x = interceptB - interceptA
-//x(slopeA - slopeB) = interceptB - interceptA 
-//x = (interceptB - interceptA) / (slopeA - slopeB)
-bool Polygon::getIntersection(const Vec2& pointA1, const Vec2& pointA2, const Vec2& pointB1, const Vec2& pointB2, Vec2& intersectionPoint) const{
-    float slopeA = (pointA2.y - pointA1.y) / (pointA2.x - pointA1.x);
-    float interceptA = pointA1.y - slopeA * pointA1.x;
-    float slopeB = (pointB2.y - pointB1.y) / (pointB2.x - pointB1.x);
-    float interceptB = pointB1.y - slopeB * pointB1.x;
-    float x = (interceptB - interceptA) / (slopeA - slopeB);
-    float yA = slopeA * x + interceptA;
-    float yB = slopeB * x + interceptB;
-    std::cout << yA << std::endl;
-    std::cout << yB << std::endl;
-    if (abs(yA-yB) <= FLT_EPSILON) {
-        intersectionPoint = { x, yA };
-        return true;
+bool Polygon::isIntersecting(Vec2 pA, Vec2 pB, Vec2 pC, Vec2 pD, Vec2& intersectionPoint) const { 
+    Vec2 pAB = pB-pA;
+    Vec2 pCD = pD-pC;
+    float divisor = pAB.cross(pCD);
+    if (divisor == 0) {
+        Vec2 pBC = pC - pB;      
+        if (pAB.x * pBC.y != pAB.y * pBC.x) {
+            return false;
+        }
+        float a = pA.x+pA.y;
+        float b = pD.x+pB.y;
+        float c = pD.x+pC.y;
+        float d = pD.x+pD.y;
+       // Vec2 tmp = intersectionPoint;
+        if (a <= c && c <= b) {
+            return true;
+            //float r = (b - c)
+            // Vec2 pCB = pB - pC;
+            // intersectionPoint = pC+pCB*(c / b); 
+            //intersectionPoint = pC;
+            //pc -> pb
+        }
+        else if(c <= a && a <= d) {
+            return true;
+        }
+        else if(a <= c && d <= b) {
+            return true;
+        }
+        else if(c <= a && b <= d) {
+            return true;
+        }
+        // if (tmp != intersectionPoint) {
+        //     return true;
+        // }
+        return false;
     }
+    if (divisor == 0) {
+        throw std::runtime_error("Can't divide by 0, lines are parallel.");
+    }
+    Vec2 pCA = pC-pA;
+    float t = pCA.cross(pCD) / divisor;
+    float u = pCA.cross(pAB) / divisor;
+    if (0 <= t && t <= 1 && 0 <= u && u <= 1) {
+        intersectionPoint = pA + pAB * t;
+        return true;
+    }  
     return false;
 }
 

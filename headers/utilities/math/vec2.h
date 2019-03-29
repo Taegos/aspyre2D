@@ -31,6 +31,7 @@ namespace math {
                 return {x / scale, y / scale};
             }
             
+            
             void operator*=(float scale) {
                 x*=scale;
                 y*=scale;
@@ -55,8 +56,17 @@ namespace math {
             }
 
             Vec2 normalized() {
-                float len = sqrt(pow(x, 2) + pow(y, 2));
-                return *this / len;
+                return *this / hypot(x*x, y*y);
+            }
+
+            float distance(const Vec2& other) {
+                float xDiff = abs(other.x - x);
+                float yDiff = abs(other.y - y);
+                return hypot(xDiff*xDiff, yDiff*yDiff);
+            } 
+
+            float cross(Vec2 other) {
+                return x * other.y - y * other.x;
             }
         };
 

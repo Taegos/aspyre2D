@@ -8,6 +8,7 @@ typedef math::geometry::Polygon GPolygon;
 
 //https://www.wolframalpha.com/input/?i=plot++++++%7B0,0%7D,+++++++++%7B1.5,1%7D,+++++++++%7B1,-2%7D,+++++++++%7B0.5,1.5%7D,
 TEST_CASE( "Test collision simple." ) {
+    srand(time(NULL));
     GPolygon polygonA = GPolygon({
         {0,0},
         {1.5,1},
@@ -17,7 +18,7 @@ TEST_CASE( "Test collision simple." ) {
         {0.5,1.5},             
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++++%7B0,0%7D,+++++++++%7B2,2%7D,+++++++++%7B10,5%7D,+++++++++%7B5,-10%7D,
@@ -31,7 +32,7 @@ TEST_CASE( "Test not collision simple." ) {
         {5,-10},             
     });
     IntersectionData data;
-    REQUIRE(!polygonA.getIntersection(polygonB, data));    
+    REQUIRE(!polygonA.isIntersecting(polygonB, data));    
 }
 
 TEST_CASE( "Test collision at points." ) {
@@ -44,11 +45,11 @@ TEST_CASE( "Test collision at points." ) {
         {2,2},             
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++++%7B0,0%7D,+++++++++%7B3,0%7D,+++++++++%7B1,-2%7D,+++++++++%7B2,+1%7D,
-TEST_CASE( "Test horizontal." ) {
+TEST_CASE( "Test one horizontal." ) {
     GPolygon polygonA = GPolygon({
         {0,0},
         {3,0},
@@ -58,11 +59,11 @@ TEST_CASE( "Test horizontal." ) {
         {2, 1},             
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot++++++++++++++++++++++++%7B1.5,-1.5%7D,+++++++++%7B1.5,+1.5%7D,++++++++++++%7B0,0%7D,+++++++++%7B2,+0.5%7D
-TEST_CASE( "Test vertical." ) {
+TEST_CASE( "Test one vertical." ) {
     GPolygon polygonA = GPolygon({
         {1.5,-1.5},
         {1.5, 1.5},             
@@ -72,11 +73,11 @@ TEST_CASE( "Test vertical." ) {
         {2, 0.5},             
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++++++++++%7B0,0%7D,+++++++++%7B3,0%7D,++++++++%7B1.5,-1.5%7D,+++++++++%7B1.5,+1.5%7D,
-TEST_CASE( "Test horizontal / vertical." ) {
+TEST_CASE( "Test horizontal and vertical." ) {
     GPolygon polygonA = GPolygon({
         {0,0},
         {3,0},
@@ -86,7 +87,35 @@ TEST_CASE( "Test horizontal / vertical." ) {
         {1.5, 1.5},             
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
+}
+
+//https://www.wolframalpha.com/input/?i=plot+%7B0,0%7D,+++++++++%7B2,1%7D,+++++++++%7B1,1%7D,+++++++++%7B3,2%7D
+TEST_CASE( "Test parallel, not overlapping." ) {
+    GPolygon polygonA = GPolygon({
+        {0,0},
+        {2,1},
+    });
+    GPolygon polygonB = GPolygon({
+        {1,1},
+        {3,2},
+    });
+    IntersectionData data;
+    REQUIRE(!polygonA.isIntersecting(polygonB, data));    
+}
+
+//https://www.wolframalpha.com/input/?i=plot+++++++++++++++++++++%7B0,+0%7D,+++++++++%7B0,+3%7D,+++++++++%7B5,+-5%7D,+++++++++%7B5,+5%7D,
+TEST_CASE( "Test parallel, vertical and not overlapping." ) {
+    GPolygon polygonA = GPolygon({
+        {0, 0},
+        {0, 3},
+    });
+    GPolygon polygonB = GPolygon({
+        {5, -5},
+        {5, 5},
+    });
+    IntersectionData data;
+    REQUIRE(!polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++%7B30,+17%7D,+++++++++%7B-5,-1%7D,+++++++++%7B30,+17%7D,+++++++++%7B-5,-1%7D,
@@ -100,7 +129,7 @@ TEST_CASE( "Test overlap exact." ) {
         {-5,-1},
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++%7B0,0%7D,+++++++++%7B2,1%7D,+++++++++%7B1,0.5%7D,+++++++++%7B3,1.5%7D
@@ -114,21 +143,7 @@ TEST_CASE( "Test overlap offset." ) {
         {3,1.5},
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
-}
-
-//https://www.wolframalpha.com/input/?i=plot+%7B0,0%7D,+++++++++%7B2,1%7D,+++++++++%7B1,1%7D,+++++++++%7B3,2%7D
-TEST_CASE( "Test parallel." ) {
-    GPolygon polygonA = GPolygon({
-        {0,0},
-        {2,1},
-    });
-    GPolygon polygonB = GPolygon({
-        {1,1},
-        {3,2},
-    });
-    IntersectionData data;
-    REQUIRE(!polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 TEST_CASE( "Test collision complex." ) {
@@ -150,7 +165,7 @@ TEST_CASE( "Test collision complex." ) {
         {5,-5},        
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 TEST_CASE( "Test not collision complex." ) {
@@ -173,7 +188,7 @@ TEST_CASE( "Test not collision complex." ) {
         {8,0}
     });
     IntersectionData data;
-    REQUIRE(!polygonA.getIntersection(polygonB, data));    
+    REQUIRE(!polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++%7B0,0%7D,+++++++++%7B2,2%7D,+++++++++%7B4,-1%7D,+%7B0,0%7D,+++++++++%7B1,-3%7D,+++++++++%7B1.5,1%7D,
@@ -191,7 +206,7 @@ TEST_CASE( "Test collision occur because polygon closed." ) {
         {1.5,1},             
     });
     IntersectionData data;
-    REQUIRE(polygonA.getIntersection(polygonB, data));    
+    REQUIRE(polygonA.isIntersecting(polygonB, data));    
 }
 
 //https://www.wolframalpha.com/input/?i=plot+++++++++++++++++++++++++++%7B0,0%7D,+++++++++%7B2,2%7D,+++++++++%7B3,-1%7D,+++++++++%7B0,+1%7D
