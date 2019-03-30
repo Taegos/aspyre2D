@@ -75,5 +75,5 @@ target_sources(Aspyre2D PUBLIC
     ${UTILITIES_DIR_CXX}/sprite_sheet.cpp
     ${MATH_DIR_CXX}/vec2.cpp
     ${GEOMETRY_DIR_CXX}/line_segment.cpp
-    ${GEOMETRY_DIR_CXX}/polygon.cpp
+    ${GEOMETRY_DIR_CXX}/path_graph.cpp
 )

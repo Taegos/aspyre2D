@@ -56,19 +56,19 @@ target_include_directories(
 )
 add_test(CollisionSystemTest CollisionSystemTest)
 
-#GEOMETRY TEST
+#PATH GRAPH TEST
 add_executable(
-    GeometryTest
-    geometry_test.cpp 
-    ${GEOMETRY_DIR_CXX}/polygon.cpp 
+    PathGraphTest
+    path_graph_test.cpp 
+    ${GEOMETRY_DIR_CXX}/path_graph.cpp 
 )
 target_include_directories(
-    GeometryTest 
+    PathGraphTest 
     PUBLIC 
     ${GEOMETRY_DIR_H}
     ${MATH_DIR_H}
 )
-add_test(GeometryTest GeometryTest)
+add_test(PathGraphTest PathGraphTest)
 
 #SPRITE SHEET TEST
 add_executable(

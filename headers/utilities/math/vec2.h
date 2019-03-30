@@ -1,6 +1,7 @@
 #pragma once
 #include <ostream>
 #include <math.h>
+#include <iostream>
 namespace math {
     namespace vector {
         struct Vec2 {           
@@ -43,8 +44,9 @@ namespace math {
             }
 
             bool operator==(const Vec2 &other) const {
-                float diff = abs(x-other.x + y-other.y);
-                return diff <= 0.015f;
+                float xDiff = abs(x-other.x);
+                float yDiff = abs(y-other.y);            
+                return (xDiff+yDiff) <= 0.0015f;
             }
             bool operator!=(const Vec2 &other) const {
                 return !(*this==other);
@@ -56,13 +58,13 @@ namespace math {
             }
 
             Vec2 normalized() {
-                return *this / hypot(x*x, y*y);
+                return *this / hypot(x, y);
             }
 
             float distance(const Vec2& other) {
                 float xDiff = abs(other.x - x);
                 float yDiff = abs(other.y - y);
-                return hypot(xDiff*xDiff, yDiff*yDiff);
+                return hypot(xDiff, yDiff);
             } 
 
             float cross(Vec2 other) {

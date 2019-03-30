@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <math.h>
+#include <iostream>
 
 using namespace std;
 using namespace math::vector;
@@ -62,4 +63,19 @@ TEST_CASE( "Normalized" ) {
     Vec2 res = vec.normalized();
     Vec2 expected{1 / sqrt(2), 1 / sqrt(2)}; 
     REQUIRE(res == expected);
+}
+
+TEST_CASE( "Equality" ) {
+    Vec2 vec1 {0, 0};
+    Vec2 vec2 {2,-2};
+    // Vec2 res = vec.normalized();
+    // Vec2 expected{1 / sqrt(2), 1 / sqrt(2)}; 
+    REQUIRE(vec1 != vec2);
+}
+
+//https://www.wolframalpha.com/input/?i=distance+between+(30,+17),(+-5,-1)
+TEST_CASE( "Distance" ) {
+    Vec2 a = {30, 17};
+    Vec2 b = {-5, -1};
+    REQUIRE(abs(a.distance(b) - sqrt(1549)) <= 0.015f) ;
 }
